@@ -4,8 +4,19 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 public class CookieQueryBuilder {
 
-    private static final String COOKIES_TABLE = "fullstackhandyman.cookies";
     private static final String COOKIE_MAP_TABLE = "fullstackhandyman.cookie_map";
+    private static final String COOKIES_TABLE = "fullstackhandyman.cookies";
+
+    public static final String SELECT_COOKIE_TEMPLATES =
+    "SELECT\n"
+    + " cm.cookie_num, cm.name ,\n"
+    + " GROUP_CONCAT(c.name SEPARATOR '~~~') AS `cookie_names`,\n"
+    + " GROUP_CONCAT(c.value SEPARATOR '~~~') AS `cookie_values`\n"
+    + "FROM \n"
+    + COOKIE_MAP_TABLE + " cm,\n"
+    + COOKIES_TABLE + " c\n"
+    + "WHERE cm.cookie_num = c.cookie_num\n"
+    + "GROUP BY cm.cookie_num";
 
     private static final String SELECT_COOKIE_MAP_NAME_COUNT_SQL = 
     "SELECT COUNT(CASE\n"

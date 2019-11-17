@@ -3,8 +3,11 @@ package cookies.service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -24,9 +27,38 @@ public class CookiePersistorImpl implements CookiePersistor {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    private static final String DELIMETER = "~~~";
+
     public CookiePersistorImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    @Override
+    public List<CookieTemplate> getCookieTemplates() {
+        return this.namedParameterJdbcTemplate.query(CookieQueryBuilder.SELECT_COOKIE_TEMPLATES,
+                new MapSqlParameterSource(), (ResultSet rs, int rowNum) -> {
+                    CookieTemplate cookieTemplate = new CookieTemplate();
+
+                    CookieMap cookieMap = new CookieMap();
+                    cookieMap.setCookieNum(rs.getInt("cookie_num"));
+                    cookieMap.setName(rs.getString("name"));
+                    cookieTemplate.setCookieMap(cookieMap);
+
+                    List<Cookie> cookies = new ArrayList<Cookie>();
+                    ListIterator<String> cookieNamesIterator = Arrays.asList(rs.getString("cookie_names").split(DELIMETER)).listIterator();
+                    ListIterator<String> cookieValuesIterator = Arrays.asList(rs.getString("cookie_values").split(DELIMETER)).listIterator();
+                    while (cookieNamesIterator.hasNext() && cookieValuesIterator.hasNext()) {
+                        Cookie cookie = new Cookie();
+                        cookie.setCookieNum(rs.getInt("cookie_num"));
+                        cookie.setName(cookieNamesIterator.next());
+                        cookie.setValue(cookieValuesIterator.next());
+                        cookies.add(cookie);
+                    }
+                    cookieTemplate.setCookies(cookies);
+
+                    return cookieTemplate;
+            });
     }
 
     @Transactional

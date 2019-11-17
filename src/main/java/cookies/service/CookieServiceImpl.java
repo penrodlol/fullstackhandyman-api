@@ -1,5 +1,7 @@
 package cookies.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import cookies.models.CookieTemplate;
@@ -13,8 +15,12 @@ public class CookieServiceImpl implements CookieService {
     }
 
     @Override
-    public CookieTemplate createCookie(CookieTemplate cookieTemplate) {
-       return this.cookiePersistorImpl.createCookie(cookieTemplate);
+    public List<CookieTemplate> getCookieTemplates() {
+        return this.cookiePersistorImpl.getCookieTemplates();
     }
 
+    @Override
+    public CookieTemplate createCookie(CookieTemplate cookieTemplate) {
+        return this.cookiePersistorImpl.createCookie(cookieTemplate);
+    }
 }
