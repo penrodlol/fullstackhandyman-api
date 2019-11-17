@@ -1,9 +1,7 @@
 package cookies.service;
 
-import java.util.List;
-
-import cookies.Cookie;
+import cookies.models.CookieTemplate;
 
 public interface CookieService {
-    public List<Cookie> getCookies();
+    public CookieTemplate createCookie(CookieTemplate cookieTemplate);
 }
