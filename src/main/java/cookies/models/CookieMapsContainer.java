@@ -1,6 +1,6 @@
 package cookies.models;
 
-public class CookieMap {
+public class CookieMapsContainer {
     private Integer containerNum;
     private String name;
 

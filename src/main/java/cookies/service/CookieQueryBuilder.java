@@ -1,42 +1,22 @@
 package cookies.service;
 
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-
 public class CookieQueryBuilder {
 
-    private static final String COOKIE_MAP_TABLE = "fullstackhandyman.cookie_map";
+    private static final String COOKIE_MAPS_CONTAINER_TABLE = "fullstackhandyman.cookie_maps_container";
+    private static final String COOKIE_MAP_TABLE = "fullstackhandyman.cookie_maps";
     private static final String COOKIES_TABLE = "fullstackhandyman.cookies";
 
-    public static final String SELECT_COOKIE_TEMPLATES =
-    "SELECT\n"
-    + " cm.cookie_num, cm.name ,\n"
-    + " GROUP_CONCAT(c.name SEPARATOR '~~~') AS `cookie_names`,\n"
-    + " GROUP_CONCAT(c.value SEPARATOR '~~~') AS `cookie_values`\n"
-    + "FROM \n"
-    + COOKIE_MAP_TABLE + " cm,\n"
-    + COOKIES_TABLE + " c\n"
-    + "WHERE cm.cookie_num = c.cookie_num\n"
-    + "GROUP BY cm.cookie_num";
+    public static final String SELECT_COOKIE_MAPS_CONTAINERS = "SELECT * FROM " + COOKIE_MAPS_CONTAINER_TABLE;
 
-    private static final String SELECT_COOKIE_MAP_NAME_COUNT_SQL = 
-    "SELECT COUNT(CASE\n"
-    + "  WHEN name = :name THEN name\n"
-    + "  END) AS name_count\n"
-    + " FROM " + COOKIE_MAP_TABLE;
+    private static final String SELECT_COOKIE_MAPS = "SELECT * FROM " + COOKIE_MAP_TABLE;
+    private static final String WHERE_COOKIE_MAP_CONTAINER_NUM_EQL = " WHERE container_num = :containerNum";
+    public static final String SELECT_COOKIE_MAPS_WITH_CONTAINER_NUMS_SQL = SELECT_COOKIE_MAPS + WHERE_COOKIE_MAP_CONTAINER_NUM_EQL;
 
-    public static final String INSERT_COOKIE_MAP_SQL =
-    "INSERT INTO " + COOKIE_MAP_TABLE + " (name)\n"
-    + " VALUES(:cookieMapName);\n";
+    private static final String SELECT_COOKIES = "SELECT * FROM " + COOKIES_TABLE;
+    private static final String WHERE_MAP_NUM_EQL = " WHERE map_num = :mapNum";
+    public static final String SELECT_COOKIES_WITH_MAP_NUM_SQL = SELECT_COOKIES + WHERE_MAP_NUM_EQL;
 
-    public static final String INSERT_COOKIE_SQL =
-    "INSERT INTO " + COOKIES_TABLE + " (cookie_num, name, value)\n"
-    + " VALUES(\n"
-    + " (SELECT cookie_num from " + COOKIE_MAP_TABLE + " WHERE name = ?),\n"
-    + " ?, ?\n"
-    + " );\n";
-
-    public static String cookieMapNameCount(MapSqlParameterSource parameters, String name) {
-        parameters.addValue("name", name);
-        return SELECT_COOKIE_MAP_NAME_COUNT_SQL;
-    }
+    public static final String INSERT_COOKIE_MAPS_CONTAINER =
+    "INSERT INTO " + COOKIE_MAPS_CONTAINER_TABLE + "(name)\n"
+    + "VALUES(:name)";
 }

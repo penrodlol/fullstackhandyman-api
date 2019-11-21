@@ -6,16 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cookies.models.CookieTemplate;
+import cookies.models.Cookie;
+import cookies.models.CookieMap;
+import cookies.models.CookieMapsContainer;
 import cookies.service.CookieService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/com/fullstackhandyman/api/cookies")
+@RequestMapping("/com/fullstackhandyman/api/cookie")
 public class CookieController {
     
     @Autowired
@@ -25,13 +27,23 @@ public class CookieController {
         this.cookieService = cookieService;
     }
 
-    @GetMapping()
-    public List<CookieTemplate> getCookies() {
-        return this.cookieService.getCookieTemplates();
+    @GetMapping("/container")
+    public List<CookieMapsContainer> getCookieMapsContainer() {
+        return this.cookieService.getCookieMapsContainers();
     }
 
-    @PostMapping("/create")
-    public CookieTemplate createCookie(@RequestBody CookieTemplate cookieTemplate) {
-        return this.cookieService.createCookie(cookieTemplate);
+    @GetMapping("/maps")
+    public List<CookieMap> getCookieMaps(@RequestHeader(value = "containerNum") Integer containerNum) {
+        return this.cookieService.getCookieMaps(containerNum);
+    }
+
+    @GetMapping("/map/cookies")
+    public List<Cookie> getCookies(@RequestHeader(value = "mapNum") Integer mapNum) {
+        return this.cookieService.getCookies(mapNum);
+    }
+
+    @PostMapping("/create/container")
+    public void createCookie(@RequestHeader(value = "name") String name) {
+        this.cookieService.createCookieMapContainer(name);
     }
 }

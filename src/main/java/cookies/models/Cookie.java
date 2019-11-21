@@ -1,12 +1,12 @@
 package cookies.models;
 
 public class Cookie {
-    private Integer cookieNum;
+    private Integer mapNum;
     private String name;
     private String value;
 
-    public Integer getCookieNum() { return this.cookieNum; }
-    public void setCookieNum(Integer cookieNum) { this.cookieNum = cookieNum; }
+    public Integer getMapNum() { return this.mapNum; }
+    public void setMapNum(Integer mapNum) { this.mapNum = mapNum; }
 
     public String getName() { return this.name; }
     public void setName(String name) { this.name = name; }
