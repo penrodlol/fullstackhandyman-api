@@ -10,5 +10,7 @@ public interface CookiePersistor {
     public List<CookieMapsContainer> getCookieMapsContainers();
     public List<CookieMap> getCookieMaps(Integer containerNum);
     public List<Cookie> getCookies(Integer mapNum);
-    public void createCookieMapContainer(String name);
+    public void insertCookieMapContainer(String name);
+    public Integer insertCookieMap(Integer containerNum, String mapName);
+    public void insertCookies(Integer mapNum, List<Cookie> cookies);
 }

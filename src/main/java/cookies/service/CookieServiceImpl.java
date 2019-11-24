@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import cookies.models.Cookie;
 import cookies.models.CookieMap;
 import cookies.models.CookieMapsContainer;
+import utils.Utils;
 
 @Service
 public class CookieServiceImpl implements CookieService {
@@ -33,6 +34,14 @@ public class CookieServiceImpl implements CookieService {
 
     @Override
     public void createCookieMapContainer(String name) {
-        this.cookiePersistor.createCookieMapContainer(name);
+        this.cookiePersistor.insertCookieMapContainer(name);
+    }
+
+    @Override
+    public void createCookies(Integer containerNum, String mapName, List<Cookie> cookies) {
+        Integer mapNum = this.cookiePersistor.insertCookieMap(containerNum, mapName);
+        if (!Utils.isNullOrZeroInteger(mapNum)) {
+            this.cookiePersistor.insertCookies(mapNum, cookies);
+        }
     }
 }

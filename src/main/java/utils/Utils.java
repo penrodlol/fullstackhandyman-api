@@ -7,6 +7,10 @@ public class Utils {
         return str == null || str.trim().isEmpty();
     }
 
+    public static Boolean isNullOrZeroInteger(Integer integer) {
+        return integer == 0 || integer == null;
+    }
+
     public static Boolean isEmptyCollection(Collection<?> col) {
         return col.size() == 0 || col.isEmpty();
     }

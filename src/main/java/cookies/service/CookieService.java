@@ -11,4 +11,5 @@ public interface CookieService {
     public List<CookieMap> getCookieMaps(Integer containerNum);
     public List<Cookie> getCookies(Integer mapNum);
     public void createCookieMapContainer(String name);
+    public void createCookies(Integer containerNum, String mapName, List<Cookie> cookies);
 }
