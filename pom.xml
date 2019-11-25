@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fullstackhandyman</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>fullstackhandyman</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>fullstackhandyman</name>
+	<description>fullstackhandyman api</description>
 
 	<properties>
 		<java.version>1.8</java.version>
