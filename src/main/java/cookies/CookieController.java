@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cookies.models.Cookie;
-import cookies.models.CookieMap;
+import cookies.models.CookieMapWrapper;
 import cookies.models.CookieMapsContainer;
 import cookies.service.CookieService;
 
@@ -34,13 +34,8 @@ public class CookieController {
     }
 
     @GetMapping("/maps")
-    public List<CookieMap> getCookieMaps(@RequestHeader(value = "containerNum") Integer containerNum) {
-        return this.cookieService.getCookieMaps(containerNum);
-    }
-
-    @GetMapping("/map/cookies")
-    public List<Cookie> getCookies(@RequestHeader(value = "mapNum") Integer mapNum) {
-        return this.cookieService.getCookies(mapNum);
+    public List<CookieMapWrapper> getCookies(@RequestHeader(value = "containerNum") Integer containerNum) {
+        return this.cookieService.getCookies(containerNum);
     }
 
     @PostMapping("/create/container")

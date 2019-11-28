@@ -3,13 +3,12 @@ package cookies.service;
 import java.util.List;
 
 import cookies.models.Cookie;
-import cookies.models.CookieMap;
+import cookies.models.CookieMapWrapper;
 import cookies.models.CookieMapsContainer;
 
 public interface CookieService {
     public List<CookieMapsContainer> getCookieMapsContainers();
-    public List<CookieMap> getCookieMaps(Integer containerNum);
-    public List<Cookie> getCookies(Integer mapNum);
+    public List<CookieMapWrapper> getCookies(Integer containerNum);
     public void createCookieMapContainer(String name);
     public void createCookies(Integer containerNum, String mapName, List<Cookie> cookies);
 }
