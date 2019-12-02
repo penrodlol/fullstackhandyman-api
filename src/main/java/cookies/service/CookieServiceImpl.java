@@ -49,8 +49,8 @@ public class CookieServiceImpl implements CookieService {
     }
 
     @Override
-    public void createCookieMapContainer(String name) {
-        this.cookiePersistor.insertCookieMapContainer(name);
+    public CookieMapsContainer createCookieMapContainer(String name) {
+        return this.cookiePersistor.insertCookieMapContainer(name);
     }
 
     @Override

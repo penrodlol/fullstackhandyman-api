@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import cookies.models.Cookie;
@@ -66,10 +68,20 @@ public class CookiePersistorImpl implements CookiePersistor {
     }
 
     @Override
-    public void insertCookieMapContainer(String name) {
-        HashMap<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("name", name);
-        this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters);
+    public CookieMapsContainer insertCookieMapContainer(String name) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        KeyHolder newContainerNum = new GeneratedKeyHolder();
+        parameters.addValue("name", name);
+        this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters, newContainerNum,
+            new String[]{"container_num"});
+
+        CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
+        Integer containerNum = newContainerNum.getKey().intValue();
+        if (!Utils.isNullOrZeroInteger(containerNum)) {
+            cookieMapsContainer.setContainerNum(containerNum);
+            cookieMapsContainer.setName(name);
+        }
+        return cookieMapsContainer;
     }
 
     @Override

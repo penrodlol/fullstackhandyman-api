@@ -28,7 +28,7 @@ public class CookieController {
         this.cookieService = cookieService;
     }
 
-    @GetMapping("/container")
+    @GetMapping("/containers")
     public List<CookieMapsContainer> getCookieMapsContainer() {
         return this.cookieService.getCookieMapsContainers();
     }
@@ -39,8 +39,8 @@ public class CookieController {
     }
 
     @PostMapping("/create/container")
-    public void createCookieMapContainer(@RequestHeader(value = "name") String name) {
-        this.cookieService.createCookieMapContainer(name);
+    public CookieMapsContainer createCookieMapContainer(@RequestHeader(value = "name") String name) {
+        return this.cookieService.createCookieMapContainer(name);
     }
 
     @PostMapping("/create/cookies")

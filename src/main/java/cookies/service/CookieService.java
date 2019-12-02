@@ -9,6 +9,6 @@ import cookies.models.CookieMapsContainer;
 public interface CookieService {
     public List<CookieMapsContainer> getCookieMapsContainers();
     public List<CookieMapWrapper> getCookies(Integer containerNum);
-    public void createCookieMapContainer(String name);
+    public CookieMapsContainer createCookieMapContainer(String name);
     public void createCookies(Integer containerNum, String mapName, List<Cookie> cookies);
 }
