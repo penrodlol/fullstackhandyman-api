@@ -31,7 +31,7 @@ public class CookiePersistorImpl implements CookiePersistor {
     public List<CookieMapsContainer> getCookieMapsContainers() {
         return this.jdbcTemplate.query(CookieQueryBuilder.SELECT_COOKIE_MAPS_CONTAINERS, (ResultSet rs, int rowNum) -> {
             CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
-            cookieMapsContainer.setContainerNum(rs.getInt("container_num"));
+            cookieMapsContainer.setContainerNum(rs.getLong("container_num"));
             cookieMapsContainer.setName(rs.getString("name"));
             return cookieMapsContainer;
         });
@@ -76,8 +76,8 @@ public class CookiePersistorImpl implements CookiePersistor {
             new String[]{"container_num"});
 
         CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
-        Integer containerNum = newContainerNum.getKey().intValue();
-        if (!Utils.isNullOrZeroInteger(containerNum)) {
+        Long containerNum = newContainerNum.getKey().longValue();
+        if (!Utils.isNullOrZeroLong(containerNum)) {
             cookieMapsContainer.setContainerNum(containerNum);
             cookieMapsContainer.setName(name);
         }

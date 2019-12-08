@@ -11,6 +11,10 @@ public class Utils {
         return integer == 0 || integer == null;
     }
 
+    public static Boolean isNullOrZeroLong(Long lo) {
+        return lo == 0L || lo == null;
+    }
+
     public static Boolean isEmptyCollection(Collection<?> col) {
         return col.size() == 0 || col.isEmpty();
     }
