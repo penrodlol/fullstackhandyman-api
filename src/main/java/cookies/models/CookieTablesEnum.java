@@ -1,4 +1,4 @@
-package cookies.service;
+package cookies.models;
 
 import lombok.Getter;
 
