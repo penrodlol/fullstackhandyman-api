@@ -11,6 +11,6 @@ public enum CookieTablesEnum {
     @Getter private String table;
 
     CookieTablesEnum(String table) {
-        this.table = "fullstackhandyman" + table;
+        this.table = table;
     }
 }
