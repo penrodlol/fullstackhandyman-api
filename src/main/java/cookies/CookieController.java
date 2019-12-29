@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cookies.models.Cookie;
-import cookies.models.CookieMapWrapper;
 import cookies.models.CookieMapsContainer;
 import cookies.service.CookieService;
 
@@ -33,21 +30,8 @@ public class CookieController {
         return this.cookieService.getCookieMapsContainers();
     }
 
-    @GetMapping("/maps")
-    public List<CookieMapWrapper> getCookies(@RequestHeader(value = "containerNum") Integer containerNum) {
-        return this.cookieService.getCookies(containerNum);
-    }
-
     @PostMapping("/create/container")
-    public CookieMapsContainer createCookieMapContainer(@RequestHeader(value = "name") String name) {
+    public CookieMapsContainer createCookieMapContainer(@RequestHeader String name) {
         return this.cookieService.createCookieMapContainer(name);
-    }
-
-    @PostMapping("/create/cookies")
-    public void createCookies(
-        @RequestHeader(value = "containerNum") Integer containerNum,
-        @RequestHeader(value = "mapName") String mapName,
-        @RequestBody List<Cookie> cookies) {
-            this.cookieService.createCookies(containerNum, mapName, cookies);
     }
 }
