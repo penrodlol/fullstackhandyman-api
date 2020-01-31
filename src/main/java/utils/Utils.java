@@ -18,4 +18,8 @@ public class Utils {
     public static Boolean isEmptyCollection(Collection<?> col) {
         return col.size() == 0 || col.isEmpty();
     }
+
+    public static Boolean isNullObject(Object object) {
+        return object == null;
+    }
 }

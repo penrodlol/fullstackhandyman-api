@@ -5,6 +5,6 @@ import java.util.List;
 import cookies.models.CookieMapsContainer;
 
 public interface CookiePersistor {
-    public List<CookieMapsContainer> getCookieMapsContainers();
-    public CookieMapsContainer insertCookieMapContainer(String name);
+    List<CookieMapsContainer> getCookieMapsContainers();
+    CookieMapsContainer insertCookieMapContainer(String name);
 }

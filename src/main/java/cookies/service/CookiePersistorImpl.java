@@ -1,6 +1,7 @@
 package cookies.service;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,15 +39,16 @@ public class CookiePersistorImpl implements CookiePersistor {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         KeyHolder newContainerNum = new GeneratedKeyHolder();
         parameters.addValue("name", name);
-        this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters, newContainerNum,
-            new String[]{"container_num"});
+        int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters,
+                newContainerNum);
+
+        if (rows <= 0)
+            return null;
 
         CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
         Long containerNum = newContainerNum.getKey().longValue();
-        if (!Utils.isNullOrZeroLong(containerNum)) {
-            cookieMapsContainer.setContainerNum(containerNum);
-            cookieMapsContainer.setName(name);
-        }
+        cookieMapsContainer.setContainerNum(containerNum);
+        cookieMapsContainer.setName(name);
         return cookieMapsContainer;
     }
 }

@@ -5,6 +5,6 @@ import java.util.List;
 import cookies.models.CookieMapsContainer;
 
 public interface CookieService {
-    public List<CookieMapsContainer> getCookieMapsContainers();
-    public CookieMapsContainer createCookieMapContainer(String name);
+    List<CookieMapsContainer> getCookieMapsContainers();
+    CookieMapsContainer createCookieMapContainer(String name);
 }
