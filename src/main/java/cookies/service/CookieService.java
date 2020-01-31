@@ -6,5 +6,5 @@ import cookies.models.CookieMapsContainer;
 
 public interface CookieService {
     List<CookieMapsContainer> getCookieMapsContainers();
-    CookieMapsContainer createCookieMapContainer(String name);
+    CookieMapsContainer createCookieMapContainer(String name) throws Exception;
 }

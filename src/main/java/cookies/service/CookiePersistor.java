@@ -6,5 +6,5 @@ import cookies.models.CookieMapsContainer;
 
 public interface CookiePersistor {
     List<CookieMapsContainer> getCookieMapsContainers();
-    CookieMapsContainer insertCookieMapContainer(String name);
+    CookieMapsContainer insertCookieMapContainer(String name) throws Exception;
 }

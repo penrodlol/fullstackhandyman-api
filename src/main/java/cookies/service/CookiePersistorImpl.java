@@ -1,7 +1,6 @@
 package cookies.service;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,7 +11,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import cookies.models.CookieMapsContainer;
-import utils.Utils;
+import exception.model.ExceptionMessages;
+import exception.model.custom.CookieException;
 
 @Repository
 public class CookiePersistorImpl implements CookiePersistor {
@@ -35,15 +35,14 @@ public class CookiePersistorImpl implements CookiePersistor {
     }
 
     @Override
-    public CookieMapsContainer insertCookieMapContainer(String name) {
+    public CookieMapsContainer insertCookieMapContainer(String name) throws Exception {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         KeyHolder newContainerNum = new GeneratedKeyHolder();
         parameters.addValue("name", name);
         int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters,
                 newContainerNum);
 
-        if (rows <= 0)
-            return null;
+        if (rows <= 0) throw new CookieException(name + ExceptionMessages.ALREADY_EXISTS.getExMsg());
 
         CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
         Long containerNum = newContainerNum.getKey().longValue();

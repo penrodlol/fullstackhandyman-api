@@ -25,13 +25,13 @@ public class CookieController {
         this.cookieService = cookieService;
     }
 
-    @GetMapping("/containers")
+    @GetMapping("containers")
     public List<CookieMapsContainer> getCookieMapsContainer() {
         return this.cookieService.getCookieMapsContainers();
     }
 
-    @PostMapping("/create/container")
-    public CookieMapsContainer createCookieMapContainer(@RequestHeader String name) {
+    @PostMapping("create/container")
+    public CookieMapsContainer createCookieMapContainer(@RequestHeader String name) throws Exception {
         return this.cookieService.createCookieMapContainer(name);
     }
 }
