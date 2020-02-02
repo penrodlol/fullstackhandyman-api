@@ -20,7 +20,7 @@ public class CookieServiceImpl implements CookieService {
     }
 
     @Override
-    public CookieMapsContainer createCookieMapContainer(String name) throws Exception {
-        return this.cookiePersistor.insertCookieMapContainer(name);
+    public CookieMapsContainer createCookieMapContainer(String name, String tag) throws Exception {
+        return this.cookiePersistor.insertCookieMapContainer(name, tag);
     }
 }

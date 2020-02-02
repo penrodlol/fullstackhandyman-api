@@ -19,8 +19,8 @@ public class CookieQueryBuilder {
     private static final String INSERT_INTO = "INSERT INTO ";
 
     public static final String INSERT_COOKIE_MAPS_CONTAINER =
-    INSERT_INTO + CookieTablesEnum.COOKIE_MAPS_CONTAINER.getTable() + "(name) "
-    + "SELECT :name "
+    INSERT_INTO + CookieTablesEnum.COOKIE_MAPS_CONTAINER.getTable() + "(name, tag) "
+    + "SELECT :name, :tag "
     + String.format(WHERE_NOT_EXISTS, CookieTablesEnum.COOKIE_MAPS_CONTAINER.getTable(), "name = :name");
     // --------------------
 }

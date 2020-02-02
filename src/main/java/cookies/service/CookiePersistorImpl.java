@@ -35,10 +35,11 @@ public class CookiePersistorImpl implements CookiePersistor {
     }
 
     @Override
-    public CookieMapsContainer insertCookieMapContainer(String name) throws Exception {
+    public CookieMapsContainer insertCookieMapContainer(String name, String tag) throws Exception {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         KeyHolder newContainerNum = new GeneratedKeyHolder();
         parameters.addValue("name", name);
+        parameters.addValue("tag", tag);
         int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters,
                 newContainerNum);
 
@@ -48,6 +49,7 @@ public class CookiePersistorImpl implements CookiePersistor {
         Long containerNum = newContainerNum.getKey().longValue();
         cookieMapsContainer.setContainerNum(containerNum);
         cookieMapsContainer.setName(name);
+        cookieMapsContainer.setTag(tag);
         return cookieMapsContainer;
     }
 }

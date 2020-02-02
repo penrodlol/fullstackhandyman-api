@@ -31,7 +31,7 @@ public class CookieController {
     }
 
     @PostMapping("create/container")
-    public CookieMapsContainer createCookieMapContainer(@RequestHeader String name) throws Exception {
-        return this.cookieService.createCookieMapContainer(name);
+    public CookieMapsContainer createCookieMapContainer(@RequestHeader String name, @RequestHeader String tag) throws Exception {
+        return this.cookieService.createCookieMapContainer(name, tag);
     }
 }
