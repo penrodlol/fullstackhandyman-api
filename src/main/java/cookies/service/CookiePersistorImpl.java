@@ -30,6 +30,7 @@ public class CookiePersistorImpl implements CookiePersistor {
             CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
             cookieMapsContainer.setContainerNum(rs.getLong("container_num"));
             cookieMapsContainer.setName(rs.getString("name"));
+            cookieMapsContainer.setTag(rs.getString("tag"));
             return cookieMapsContainer;
         });
     }
