@@ -8,4 +8,5 @@ public interface CookiePersistor {
     List<CookieMapsContainer> getCookieMapsContainers();
     CookieMapsContainer insertCookieMapContainer(String name, String tag) throws Exception;
     CookieMapsContainer editCookieMapContainer(CookieMapsContainer cookieMapsContainer) throws Exception;
+    Long deleteCookieMapContainer(Long containerNum) throws Exception;
 }

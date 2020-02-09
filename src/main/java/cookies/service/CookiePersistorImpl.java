@@ -72,6 +72,17 @@ public class CookiePersistorImpl implements CookiePersistor {
         return cookieMapsContainer;
     }
 
+    @Override
+    public Long deleteCookieMapContainer(Long containerNum) throws Exception {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("containerNum", containerNum);
+        int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.DELETE_COOKIE_MAPS_CONTAINER, parameters);
+
+        if (rows <= 0) throw new CookieException(ExceptionMessages.UNABLE_TO_DELETE.getExMsg() + containerNum.toString());
+
+        return containerNum;
+    }
+
     private String buildUpdateExceptionMsg(String cutomMsg) {
         StringBuilder errorUpdatingCookieMapsContainerMsg = new StringBuilder();
         errorUpdatingCookieMapsContainerMsg.append(ExceptionMessages.UNABLE_TO_UPDATE.getExMsg());

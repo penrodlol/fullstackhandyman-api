@@ -25,7 +25,12 @@ public class CookieServiceImpl implements CookieService {
     }
 
     @Override
-    public CookieMapsContainer editCookieMapContainers(CookieMapsContainer cookieMapsContainer) throws Exception {
+    public CookieMapsContainer editCookieMapContainer(CookieMapsContainer cookieMapsContainer) throws Exception {
         return this.cookiePersistor.editCookieMapContainer(cookieMapsContainer);
+    }
+
+    @Override
+    public Long deleteCookieMapContainer(Long containerNum) throws Exception {
+        return this.cookiePersistor.deleteCookieMapContainer(containerNum);
     }
 }

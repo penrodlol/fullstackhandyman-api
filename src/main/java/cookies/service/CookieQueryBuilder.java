@@ -33,4 +33,12 @@ public class CookieQueryBuilder {
     + String.format(SET_VALUE, "name", ":containerName") + ",tag = :containerTag"
     + " WHERE container_num = :containerNum";
     // --------------------
+
+    // DELETE FROM TABLES
+    private static final String DELETE_FROM_TABLE = "DELETE FROM %s ";
+
+    public static final String DELETE_COOKIE_MAPS_CONTAINER =
+    String.format(DELETE_FROM_TABLE, CookieTablesEnum.COOKIE_MAPS_CONTAINER.getTable())
+    + " WHERE container_num = :containerNum";
+    // --------------------
 }

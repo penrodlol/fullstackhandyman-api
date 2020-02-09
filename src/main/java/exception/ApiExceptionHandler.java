@@ -23,6 +23,7 @@ public class ApiExceptionHandler {
     }
 
     private ResponseEntity<?> buildExceptionEntity(Exception ex, HttpStatus status, String message) {
+        ex.printStackTrace();
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setException(ex.getClass().getSimpleName());
         exceptionModel.setReason(message);
