@@ -1,4 +1,4 @@
-package cookies.service;
+package cookies.service.cookiemapscontainer;
 
 import java.sql.ResultSet;
 import java.util.List;
@@ -16,18 +16,19 @@ import exception.model.custom.CookieException;
 import utils.Utils;
 
 @Repository
-public class CookiePersistorImpl implements CookiePersistor {
+public class CookieMapsContainerPersistorImpl implements CookieMapsContainerPersistor {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public CookiePersistorImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public CookieMapsContainerPersistorImpl(JdbcTemplate jdbcTemplate,
+        NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
     public List<CookieMapsContainer> getCookieMapsContainers() {
-        return this.jdbcTemplate.query(CookieQueryBuilder.SELECT_COOKIE_MAPS_CONTAINERS, (ResultSet rs, int rowNum) -> {
+        return this.jdbcTemplate.query(CookieMapsContainerQueryBuilder.SELECT_COOKIE_MAPS_CONTAINERS, (ResultSet rs, int rowNum) -> {
             CookieMapsContainer cookieMapsContainer = new CookieMapsContainer();
             cookieMapsContainer.setContainerNum(rs.getLong("container_num"));
             cookieMapsContainer.setName(rs.getString("name"));
@@ -42,7 +43,7 @@ public class CookiePersistorImpl implements CookiePersistor {
         KeyHolder newContainerNum = new GeneratedKeyHolder();
         parameters.addValue("name", name);
         parameters.addValue("tag", tag);
-        int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters,
+        int rows = this.namedParameterJdbcTemplate.update(CookieMapsContainerQueryBuilder.INSERT_COOKIE_MAPS_CONTAINER, parameters,
                 newContainerNum);
 
         if (rows <= 0) throw new CookieException(name + ExceptionMessages.ALREADY_EXISTS.getExMsg());
@@ -66,7 +67,7 @@ public class CookiePersistorImpl implements CookiePersistor {
         parameters.addValue("containerName", cookieMapsContainer.getName());
         parameters.addValue("containerTag", cookieMapsContainer.getTag());
 
-        int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.UPDATE_COOKIE_MAPS_CONTAINER, parameters);
+        int rows = this.namedParameterJdbcTemplate.update(CookieMapsContainerQueryBuilder.UPDATE_COOKIE_MAPS_CONTAINER, parameters);
         if (rows <= 0) throw new CookieException(buildUpdateExceptionMsg("container. Your container name is likely already in use or doesn't exist."));
 
         return cookieMapsContainer;
@@ -76,7 +77,7 @@ public class CookiePersistorImpl implements CookiePersistor {
     public Long deleteCookieMapContainer(Long containerNum) throws Exception {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("containerNum", containerNum);
-        int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.DELETE_COOKIE_MAPS_CONTAINER, parameters);
+        int rows = this.namedParameterJdbcTemplate.update(CookieMapsContainerQueryBuilder.DELETE_COOKIE_MAPS_CONTAINER, parameters);
 
         if (rows <= 0) throw new CookieException(ExceptionMessages.UNABLE_TO_DELETE.getExMsg() + containerNum.toString());
 
