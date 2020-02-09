@@ -53,4 +53,22 @@ public class CookiePersistorImpl implements CookiePersistor {
         cookieMapsContainer.setTag(tag);
         return cookieMapsContainer;
     }
+
+    @Override
+    public CookieMapsContainer editCookieMapContainer(CookieMapsContainer cookieMapsContainer) throws Exception {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("containerNum", cookieMapsContainer.getContainerNum());
+        parameters.addValue("containerName", cookieMapsContainer.getName());
+        parameters.addValue("containerTag", cookieMapsContainer.getTag());
+
+        int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.UPDATE_COOKIE_MAPS_CONTAINER, parameters);
+        if (rows <= 0) {
+            StringBuilder errorUpdatingCookieMapsContainerMsg = new StringBuilder();
+            errorUpdatingCookieMapsContainerMsg.append(ExceptionMessages.UNABLE_TO_UPDATE.getExMsg());
+            errorUpdatingCookieMapsContainerMsg.append("container. Your container name is likely already in use or doesn't exist.");
+            throw new CookieException(errorUpdatingCookieMapsContainerMsg.toString());
+        }
+
+        return cookieMapsContainer;
+    }
 }

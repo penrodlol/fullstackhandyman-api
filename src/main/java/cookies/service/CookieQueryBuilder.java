@@ -23,4 +23,14 @@ public class CookieQueryBuilder {
     + "SELECT :name, :tag "
     + String.format(WHERE_NOT_EXISTS, CookieTablesEnum.COOKIE_MAPS_CONTAINER.getTable(), "name = :name");
     // --------------------
+
+    // UPDATE TABLES
+    private static final String UPDATE_TABLE = "UPDATE %s ";
+    private static final String SET_VALUE = "SET %s = %s";
+
+    public static final String UPDATE_COOKIE_MAPS_CONTAINER =
+    String.format(UPDATE_TABLE, CookieTablesEnum.COOKIE_MAPS_CONTAINER.getTable())
+    + String.format(SET_VALUE, "name", ":containerName") + ",tag = :containerTag"
+    + " WHERE container_num = :containerNum";
+    // --------------------
 }

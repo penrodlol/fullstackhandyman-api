@@ -23,4 +23,9 @@ public class CookieServiceImpl implements CookieService {
     public CookieMapsContainer createCookieMapContainer(String name, String tag) throws Exception {
         return this.cookiePersistor.insertCookieMapContainer(name, tag);
     }
+
+    @Override
+    public CookieMapsContainer editCookieMapContainers(CookieMapsContainer cookieMapsContainer) throws Exception {
+        return this.cookiePersistor.editCookieMapContainer(cookieMapsContainer);
+    }
 }
