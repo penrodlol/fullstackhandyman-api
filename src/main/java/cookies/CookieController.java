@@ -2,7 +2,6 @@ package cookies;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cookies.models.CookieMap;
 import cookies.models.CookieMapsContainer;
+import cookies.service.cookiemaps.CookieMapsService;
 import cookies.service.cookiemapscontainer.CookieMapsContainerService;
 
 @CrossOrigin
@@ -21,11 +22,13 @@ import cookies.service.cookiemapscontainer.CookieMapsContainerService;
 @RequestMapping("/com/fullstackhandyman/api/cookie")
 public class CookieController {
     
-    @Autowired
     private CookieMapsContainerService cookieMapsContainerService;
+    private CookieMapsService cookieMapsService;
 
-    public CookieController(CookieMapsContainerService cookieMapsContainerService) {
+    public CookieController(CookieMapsContainerService cookieMapsContainerService,
+        CookieMapsService cookieMapsService) {
         this.cookieMapsContainerService = cookieMapsContainerService;
+        this.cookieMapsService = cookieMapsService;
     }
 
     @GetMapping("containers")
@@ -46,5 +49,10 @@ public class CookieController {
     @DeleteMapping("delete/container")
     public Long deleteCookieMapContainer(@RequestHeader Long containerNum) throws Exception {
         return this.cookieMapsContainerService.deleteCookieMapContainer(containerNum);
+    }
+
+    @GetMapping("maps")
+    public List<CookieMap> getCookieMaps(@RequestHeader Long containerNum) {
+        return this.cookieMapsService.getCookieMaps(containerNum);
     }
 }
