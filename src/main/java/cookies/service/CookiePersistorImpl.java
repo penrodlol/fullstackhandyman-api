@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import cookies.models.CookieMapsContainer;
 import exception.model.ExceptionMessages;
 import exception.model.custom.CookieException;
+import utils.Utils;
 
 @Repository
 public class CookiePersistorImpl implements CookiePersistor {
@@ -56,19 +57,25 @@ public class CookiePersistorImpl implements CookiePersistor {
 
     @Override
     public CookieMapsContainer editCookieMapContainer(CookieMapsContainer cookieMapsContainer) throws Exception {
+        if (Utils.isEmptyString(cookieMapsContainer.getName()) || Utils.isEmptyString(cookieMapsContainer.getTag())) {
+            throw new CookieException(buildUpdateExceptionMsg("container. Both container name and tag cannot be empty."));
+        }
+
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("containerNum", cookieMapsContainer.getContainerNum());
         parameters.addValue("containerName", cookieMapsContainer.getName());
         parameters.addValue("containerTag", cookieMapsContainer.getTag());
 
         int rows = this.namedParameterJdbcTemplate.update(CookieQueryBuilder.UPDATE_COOKIE_MAPS_CONTAINER, parameters);
-        if (rows <= 0) {
-            StringBuilder errorUpdatingCookieMapsContainerMsg = new StringBuilder();
-            errorUpdatingCookieMapsContainerMsg.append(ExceptionMessages.UNABLE_TO_UPDATE.getExMsg());
-            errorUpdatingCookieMapsContainerMsg.append("container. Your container name is likely already in use or doesn't exist.");
-            throw new CookieException(errorUpdatingCookieMapsContainerMsg.toString());
-        }
+        if (rows <= 0) throw new CookieException(buildUpdateExceptionMsg("container. Your container name is likely already in use or doesn't exist."));
 
         return cookieMapsContainer;
+    }
+
+    private String buildUpdateExceptionMsg(String cutomMsg) {
+        StringBuilder errorUpdatingCookieMapsContainerMsg = new StringBuilder();
+        errorUpdatingCookieMapsContainerMsg.append(ExceptionMessages.UNABLE_TO_UPDATE.getExMsg());
+        errorUpdatingCookieMapsContainerMsg.append(cutomMsg);
+        return errorUpdatingCookieMapsContainerMsg.toString();
     }
 }
